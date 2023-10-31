@@ -1,26 +1,23 @@
 import { useState } from "react";
-import { AddCategory } from "./components/AddCategory";
+import { AddCategory, GifGrid } from "./components";
+
 
 export const GifExpert = () => {
-    // para almacenar informacion y esa info tiene que cambiar el HTML
-    const [categories, setCategories] = useState(["One Punch", "Dragon Ball"]);
-    const onAddCategories = () => {
-        // setCategories([...categories, "elemto3"]);
-        setCategories((cat) => [...cat, "elemento"]);
-    };
-    return (
-        <>
-            {/* TITULO */}
-            <h1>GifExpert</h1>
-            {/* INPUT */}
-            <AddCategory />
-            {/* LISTADO */}
-            <button onClick={onAddCategories}>Agregar</button>
-            <ol>
-                {categories.map((category) => {
-                    return <li key={category}>{category}</li>;
-                })}
-            </ol>
-        </>
-    );
+  const [categories, setCategories] = useState([""]);
+  const onAddCategories = (newCategory) => {
+    // setCategories([...categories, "elemento3"]);
+    if (categories.includes(newCategory)) return;
+    setCategories([newCategory, ...categories]);
+    // setCategories((cat) => [...cat, newCategory]);
+  };
+  return (
+    <>
+      <h1>GifExpert</h1>
+      <AddCategory onNewCategory={(value) => onAddCategories(value)} />
+
+      {categories.map((category) => (
+        <GifGrid key={category} category={category} />
+      ))}
+    </>
+  );
 };
